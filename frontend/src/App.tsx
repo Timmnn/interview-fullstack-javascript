@@ -4,6 +4,7 @@ import TextInput from './components/TextInput'
 import Table from './components/Table'
 import { City } from '../../types'
 import AddCityForm from './components/AddCityForm'
+import DeleteCityForm from './components/DeleteCityForm'
 
 function App() {
   const [query, setQuery] = useState("Ber")
@@ -23,7 +24,7 @@ function App() {
 
         // no more data to load
         if (json.data.length === 0) {
-          setPage(page - 1)
+          setPage(Math.max(page - 1, 1))
         }
 
       })
@@ -51,6 +52,7 @@ function App() {
   return (
     <>
       <AddCityForm />
+      <DeleteCityForm />
       <TextInput label="City" value={query} onChange={setQuery}/>
       <button onClick={()=>submitQuery()}>Search</button>
       <button onClick={()=>incrementPage(-1)}>Previous</button>

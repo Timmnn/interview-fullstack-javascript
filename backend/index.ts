@@ -145,6 +145,32 @@ app.post("/api/v1/cities", (req: Request, res: Response) => {
    });
 });
 
+app.delete("/api/v1/cities", (req: Request, res: Response) => {
+   const cityName = req.body.cityName as string | undefined;
+
+   if (!cityName) {
+      return res.status(400).json({
+         type: "error",
+         message: "City name is missing",
+      });
+   }
+
+   pg_client.query('DELETE FROM cities WHERE "cityName" = $1', [cityName], (err, result) => {
+      if (err) {
+         console.log(err);
+         return res.status(500).json({
+            type: "error",
+            message: "Internal server error",
+         });
+      }
+
+      res.json({
+         type: "success",
+         message: "Data deleted successfully",
+      });
+   });
+});
+
 app.listen(port, () => {
    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
