@@ -10,7 +10,7 @@ import ErrorText from './components/ErrorText'
 
 function App() {
   const [query, setQuery] = useState("Ber")
-  const [apiError, setApiError] = useState(null as string | null)
+  const [apiError, setApiError] = useState('')
   const [cities, setCities] = useState([] as City[])
   const [page, setPage] = useState(1)
 
@@ -18,9 +18,9 @@ function App() {
 
 
 
-  async function submitQuery(page) {
+  async function submitQuery(page: number = 0) {
     if(!page) {
-      page = 1
+      page = 1 as number
       setPage(1)
     }
 
@@ -34,7 +34,7 @@ function App() {
           setPage(Math.max(page - 1, 1))
         }
 
-        setApiError(null)
+        setApiError('')
 
       })
       .catch(err=> {
