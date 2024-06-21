@@ -39,3 +39,9 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+
+# ignore bun.lockb
+bun.lockb
+
+# ignore package-lock.json
+package-lock.json
