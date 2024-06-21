@@ -5,6 +5,7 @@ import Table from './components/Table'
 import { City } from '../../types'
 import AddCityForm from './components/AddCityForm'
 import DeleteCityForm from './components/DeleteCityForm'
+import UpdateCityForm from './components/UpdateCityForm'
 
 function App() {
   const [query, setQuery] = useState("Ber")
@@ -16,7 +17,12 @@ function App() {
 
 
 
-  async function submitQuery(page = 1) {
+  async function submitQuery(page) {
+    if(!page) {
+      page = 1
+      setPage(1)
+    }
+
     await fetch(`http://localhost:8000/api/v1/cities?q=${query}&page=${page}`)
       .then(response => response.json())
       .then(json => {
@@ -26,6 +32,8 @@ function App() {
         if (json.data.length === 0) {
           setPage(Math.max(page - 1, 1))
         }
+
+        setApiError(null)
 
       })
       .catch(err=> {
@@ -53,6 +61,7 @@ function App() {
     <>
       <AddCityForm />
       <DeleteCityForm />
+      <UpdateCityForm />
       <TextInput label="City" value={query} onChange={setQuery}/>
       <button onClick={()=>submitQuery()}>Search</button>
       <button onClick={()=>incrementPage(-1)}>Previous</button>

@@ -171,6 +171,46 @@ app.delete("/api/v1/cities", (req: Request, res: Response) => {
    });
 });
 
+app.put("/api/v1/cities", (req: Request, res: Response) => {
+   const body = req.body as {
+      city: {
+         cityName: string;
+         count: number;
+      };
+   };
+
+   if (
+      !body.city.cityName ||
+      !body.city.count ||
+      typeof body.city.count !== "number" ||
+      typeof body.city.cityName !== "string"
+   ) {
+      return res.status(400).json({
+         type: "error",
+         message: "City name or count is missing",
+      });
+   }
+
+   pg_client.query(
+      'UPDATE cities SET count = $1 WHERE "cityName" = $2',
+      [body.city.count, body.city.cityName],
+      (err, result) => {
+         if (err) {
+            console.log(err);
+            return res.status(500).json({
+               type: "error",
+               message: "Internal server error",
+            });
+         }
+
+         res.json({
+            type: "success",
+            message: "Data updated successfully",
+         });
+      }
+   );
+});
+
 app.listen(port, () => {
    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
