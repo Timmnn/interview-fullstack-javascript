@@ -43,6 +43,9 @@ function getMockData(): City[] {
 
 app.get("/api/v1/cities", (req: Request, res: Response) => {
    const q = req.query.q as string | undefined;
+   const page = parseInt(req.query.page as string) || 1;
+
+   const pageSize = 5;
    if (!q) {
       return res.status(400).json({
          type: "error",
@@ -52,8 +55,8 @@ app.get("/api/v1/cities", (req: Request, res: Response) => {
 
    console.log(q);
    pg_client.query(
-      'SELECT * FROM cities WHERE position($1 in "cityName") > 0',
-      [q],
+      'SELECT * FROM cities WHERE position($1 in "cityName") > 0 LIMIT $2 OFFSET $3',
+      [q, pageSize, (page - 1) * pageSize],
       (err, result) => {
          if (err) {
             console.log(err);

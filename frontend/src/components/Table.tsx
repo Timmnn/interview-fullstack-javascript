@@ -5,6 +5,7 @@ export default function Table({ data }: {data: City[]}) {
    // e.g. columns = ["uuid", "cityName", "count"]
    const columns: (keyof City)[] = data[0] ? Object.keys(data[0]) as (keyof City)[] : []
 
+
       return (
          <table>
                <thead>
@@ -16,9 +17,10 @@ export default function Table({ data }: {data: City[]}) {
                </thead>
                <tbody>
                   {data.map((city) => (
-                     <tr key={city.uuid}>
+                     <tr key={city.id}>
+                        
                         {columns.map((col) => (
-                           <td key={city.uuid + col}>{city[col]}</td>
+                           <td key={city.id + col}>{ city[col] }  </td>
                         ))}
                      </tr>
                   ))}

@@ -1,5 +1,5 @@
 interface City {
-   uuid: string;
+   id: string;
    cityName: string;
    count: number;
 }
