@@ -19,6 +19,7 @@ export default function AddCityForm() {
          .then(response => response.json())
          .then(json => {
             console.log(json);
+            setApiError('');
          })
          .catch(err => {
             console.error(err);
