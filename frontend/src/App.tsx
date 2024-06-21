@@ -3,12 +3,15 @@ import './App.css'
 import TextInput from './components/TextInput'
 import Table from './components/Table'
 import { City } from '../../types'
+import AddCityForm from './components/AddCityForm'
 
 function App() {
   const [query, setQuery] = useState("Ber")
   const [apiError, setApiError] = useState(null as string | null)
   const [cities, setCities] = useState([] as City[])
   const [page, setPage] = useState(1)
+
+
 
 
 
@@ -43,8 +46,11 @@ function App() {
   }
 
 
+
+
   return (
     <>
+      <AddCityForm />
       <TextInput label="City" value={query} onChange={setQuery}/>
       <button onClick={()=>submitQuery()}>Search</button>
       <button onClick={()=>incrementPage(-1)}>Previous</button>
