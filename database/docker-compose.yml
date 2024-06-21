@@ -1,0 +1,14 @@
+volumes:
+  db_data:
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      # Credentials shouldnt be hardcoded in the script, but for the sake of simplicity I will do it here
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"

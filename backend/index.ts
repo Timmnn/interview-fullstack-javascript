@@ -2,6 +2,17 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import fs from "fs";
+import pg from "pg";
+
+const pg_client = new pg.Client({
+   user: "postgres",
+   host: "localhost",
+   database: "postgres",
+   password: "postgres",
+   port: 5432,
+});
+
+pg_client.connect();
 
 dotenv.config();
 
@@ -31,10 +42,6 @@ function getMockData(): City[] {
 }
 
 app.get("/api/v1/cities", (req: Request, res: Response) => {
-   // send data from mock db
-
-   const cities = getMockData();
-
    const q = req.query.q as string | undefined;
    if (!q) {
       return res.status(400).json({
@@ -43,12 +50,26 @@ app.get("/api/v1/cities", (req: Request, res: Response) => {
       });
    }
 
-   const filteredCities = cities.filter(city => city.cityName.includes(q));
+   pg_client.query(
+      "SELECT * FROM cities WHERE 'cities.cityName' LIKE $1;",
+      [`%${q}%`],
+      (err, result) => {
+         if (err) {
+            console.log(err);
+            return res.status(500).json({
+               type: "error",
+               message: "Internal server error",
+            });
+         }
 
-   res.json({
-      type: "success",
-      data: filteredCities,
-   });
+         const cities = result.rows;
+
+         res.json({
+            type: "success",
+            data: cities,
+         });
+      }
+   );
 });
 
 app.listen(port, () => {
