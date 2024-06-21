@@ -50,9 +50,10 @@ app.get("/api/v1/cities", (req: Request, res: Response) => {
       });
    }
 
+   console.log(q);
    pg_client.query(
-      "SELECT * FROM cities WHERE 'cities.cityName' LIKE $1;",
-      [`%${q}%`],
+      'SELECT * FROM cities WHERE position($1 in "cityName") > 0',
+      [q],
       (err, result) => {
          if (err) {
             console.log(err);
@@ -63,6 +64,8 @@ app.get("/api/v1/cities", (req: Request, res: Response) => {
          }
 
          const cities = result.rows;
+
+         console.log(cities);
 
          res.json({
             type: "success",
