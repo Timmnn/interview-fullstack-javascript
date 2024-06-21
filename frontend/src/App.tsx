@@ -5,6 +5,7 @@ import { City } from '../../types'
 import AddCityForm from './components/AddCityForm'
 import DeleteCityForm from './components/DeleteCityForm'
 import UpdateCityForm from './components/UpdateCityForm'
+import ErrorText from './components/ErrorText'
 
 
 function App() {
@@ -69,11 +70,7 @@ function App() {
           <button onClick={()=>incrementPage(-1)}>Previous</button>
           <button onClick={()=>incrementPage(1)}>Next</button>
         </div>
-        <p className='bg-red-200'>
-          {apiError && (
-            apiError
-          )}
-        </p>
+        <ErrorText error={apiError} />
         <Table data={cities} />
 
       </div>

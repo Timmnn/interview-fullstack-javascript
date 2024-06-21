@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import TextInput from './TextInput'
+import ErrorText from './ErrorText'
 
 export default function AddCityForm() {
    const [cityName, setCityName] = useState('')
+   const [apiError, setApiError] = useState('')
+
    function deleteCity() {
       fetch('http://localhost:8000/api/v1/cities', {
          method: 'DELETE',
@@ -19,6 +22,7 @@ export default function AddCityForm() {
          })
          .catch(err => {
             console.error(err);
+            setApiError(err.toString());
          });
       }
 
@@ -27,6 +31,7 @@ export default function AddCityForm() {
       <div className='card'>
          <TextInput label="City" value={cityName} onChange={setCityName} />
          <button className='mt-2' onClick={deleteCity}>Delete City</button>
+         <ErrorText error={apiError} />
       </div>
    )
    

@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import TextInput from './TextInput'
+import ErrorText from './ErrorText'
+
 
 export default function AddCityForm() {
    const [cityName, setCityName] = useState('')
    const [count, setCount] = useState('0')
+   const [apiError, setApiError] = useState('')
    function submitCity() {
       fetch('http://localhost:8000/api/v1/cities', {
          method: 'PUT',
@@ -24,6 +27,7 @@ export default function AddCityForm() {
          })
          .catch(err => {
             console.error(err);
+            setApiError(err.toString());
          });
 
 
@@ -36,6 +40,7 @@ export default function AddCityForm() {
          <TextInput label="City" value={cityName} onChange={setCityName} />
          <TextInput label="Count" value={count} onChange={setCount} />
          <button className='mt-2' onClick={submitCity}>Update City</button>
+         <ErrorText error={apiError} />
       </div>
    )
    
