@@ -24,9 +24,9 @@ export default function AddCityForm() {
 
       
    return (
-      <div>
+      <div className='card'>
          <TextInput label="City" value={cityName} onChange={setCityName} />
-         <button onClick={deleteCity}>Delete City</button>
+         <button className='mt-2' onClick={deleteCity}>Delete City</button>
       </div>
    )
    

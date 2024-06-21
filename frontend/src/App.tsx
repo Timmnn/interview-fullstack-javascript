@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import TextInput from './components/TextInput'
 import Table from './components/Table'
 import { City } from '../../types'
 import AddCityForm from './components/AddCityForm'
 import DeleteCityForm from './components/DeleteCityForm'
 import UpdateCityForm from './components/UpdateCityForm'
+
 
 function App() {
   const [query, setQuery] = useState("Ber")
@@ -58,22 +58,27 @@ function App() {
 
 
   return (
-    <>
+    <div className='flex flex-col gap-3 p-10 '>
       <AddCityForm />
       <DeleteCityForm />
       <UpdateCityForm />
-      <TextInput label="City" value={query} onChange={setQuery}/>
-      <button onClick={()=>submitQuery()}>Search</button>
-      <button onClick={()=>incrementPage(-1)}>Previous</button>
-      <button onClick={()=>incrementPage(1)}>Next</button>
-      <p>
-        {apiError && (
-          apiError
-        )}
-      </p>
+      <div className="card">
+        <TextInput label="City" value={query} onChange={setQuery}/>
+        <div className="flex gap-2 my-2">
+          <button onClick={()=>submitQuery()}>Search</button>
+          <button onClick={()=>incrementPage(-1)}>Previous</button>
+          <button onClick={()=>incrementPage(1)}>Next</button>
+        </div>
+        <p className='bg-red-200'>
+          {apiError && (
+            apiError
+          )}
+        </p>
+        <Table data={cities} />
 
-      <Table data={cities} />
-    </>
+      </div>
+
+    </div>
   )
 }
 

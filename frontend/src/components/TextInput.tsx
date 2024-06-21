@@ -6,10 +6,11 @@ export default function TextInput({ label, value,  onChange }: {
    onChange: (newValue: string) => void
 }) {
    return (
-      <label>
+      <label className='flex flex-col gap-2'>
          {label}
          <input
             type="text"
+            className='border border-gray-400 p-1 rounded'
             value={value}
             onChange={e => onChange(e.target.value)}
          />

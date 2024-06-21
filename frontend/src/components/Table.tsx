@@ -7,9 +7,9 @@ export default function Table({ data }: {data: City[]}) {
 
 
       return (
-         <table>
+         <table className='outline outline-1'>
                <thead>
-                  <tr>
+                  <tr className='bg-blue-400 text-center'>
                      {columns.map((col) => (
                         <th key={col}>{col}</th>
                      ))}
@@ -17,10 +17,9 @@ export default function Table({ data }: {data: City[]}) {
                </thead>
                <tbody>
                   {data.map((city) => (
-                     <tr key={city.id}>
-                        
+                     <tr key={city.id} className='odd:bg-blue-200 even:bg-blue-300'>
                         {columns.map((col) => (
-                           <td key={city.id + col}>{ city[col] }  </td>
+                           <td  className='text-center' key={city.id + col}>{ city[col] }  </td>
                         ))}
                      </tr>
                   ))}

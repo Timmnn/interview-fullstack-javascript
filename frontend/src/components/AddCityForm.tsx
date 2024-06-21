@@ -33,10 +33,10 @@ export default function AddCityForm() {
 
       
    return (
-      <div>
+      <div className='card' >
          <TextInput label="City" value={cityName} onChange={setCityName} />
          <TextInput label="Count" value={count} onChange={setCount} />
-         <button onClick={submitCity}>Add City</button>
+         <button className='mt-2' onClick={submitCity}>Add City</button>
       </div>
    )
    
